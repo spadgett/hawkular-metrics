@@ -21,6 +21,8 @@ import static java.util.stream.Collectors.toMap;
 import static org.hawkular.metrics.core.api.MetricType.COUNTER;
 import static org.hawkular.metrics.core.impl.TimeUUIDUtils.getTimeUUID;
 
+import static com.datastax.driver.core.BatchStatement.Type.UNLOGGED;
+
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Map;
