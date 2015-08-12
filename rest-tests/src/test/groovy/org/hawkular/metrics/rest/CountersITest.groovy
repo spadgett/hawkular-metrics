@@ -313,11 +313,10 @@ class CountersITest extends RESTTest {
 
     setTime(start)
 
-    // Create the counter metric
+    // Create the tenant
     def response = hawkularMetrics.post(
-        path: "counters",
-        headers: [(tenantHeaderName): tenantId],
-        body: [id: counter]
+        path: "tenants",
+        body: [id: tenantId]
     )
     assertEquals(201, response.status)
 
