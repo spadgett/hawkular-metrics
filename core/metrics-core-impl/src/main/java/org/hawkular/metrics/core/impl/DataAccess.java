@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.ResultSetFuture;
 import org.hawkular.metrics.core.api.AvailabilityType;
 import org.hawkular.metrics.core.api.DataPoint;
 import org.hawkular.metrics.core.api.Interval;
@@ -29,6 +27,10 @@ import org.hawkular.metrics.core.api.Metric;
 import org.hawkular.metrics.core.api.MetricId;
 import org.hawkular.metrics.core.api.MetricType;
 import org.hawkular.metrics.core.api.Tenant;
+
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.ResultSetFuture;
+
 import rx.Observable;
 
 /**
@@ -39,7 +41,11 @@ public interface DataAccess {
 
     Observable<ResultSet> findAllTenantIds();
 
+    Observable<ResultSet> findTenantIds(long time);
+
     Observable<ResultSet> findTenant(String id);
+
+    Observable<ResultSet> deleteTenantsBucket(long time);
 
     ResultSetFuture insertMetricInMetricsIndex(Metric metric);
 

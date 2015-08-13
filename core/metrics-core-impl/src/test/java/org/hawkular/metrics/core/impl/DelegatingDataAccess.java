@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.ResultSetFuture;
 import org.hawkular.metrics.core.api.AvailabilityType;
 import org.hawkular.metrics.core.api.DataPoint;
 import org.hawkular.metrics.core.api.Interval;
@@ -29,6 +27,10 @@ import org.hawkular.metrics.core.api.Metric;
 import org.hawkular.metrics.core.api.MetricId;
 import org.hawkular.metrics.core.api.MetricType;
 import org.hawkular.metrics.core.api.Tenant;
+
+import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.core.ResultSetFuture;
+
 import rx.Observable;
 
 /**
@@ -55,6 +57,14 @@ public class DelegatingDataAccess implements DataAccess {
     @Override
     public Observable<ResultSet> findTenant(String id) {
         return delegate.findTenant(id);
+    }
+
+    @Override public Observable<ResultSet> findTenantIds(long time) {
+        return delegate.findTenantIds(time);
+    }
+
+    @Override public Observable<ResultSet> deleteTenantsBucket(long time) {
+        return delegate.deleteTenantsBucket(time);
     }
 
     @Override
