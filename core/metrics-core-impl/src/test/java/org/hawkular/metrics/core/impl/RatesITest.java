@@ -16,7 +16,18 @@
  */
 package org.hawkular.metrics.core.impl;
 
-import com.codahale.metrics.MetricRegistry;
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
+import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
+import static org.hawkular.metrics.core.api.MetricType.COUNTER;
+import static org.joda.time.Duration.standardMinutes;
+import static org.testng.Assert.assertEquals;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.hawkular.metrics.core.api.DataPoint;
 import org.hawkular.metrics.core.api.Metric;
 import org.hawkular.metrics.core.api.MetricId;
@@ -31,21 +42,13 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import com.codahale.metrics.MetricRegistry;
+
 import rx.Observable;
 import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 import rx.schedulers.TestScheduler;
-
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
-import static java.util.concurrent.TimeUnit.MINUTES;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.hawkular.metrics.core.api.MetricType.COUNTER;
-import static org.joda.time.Duration.standardMinutes;
-import static org.testng.Assert.assertEquals;
 
 /**
  * This class tests counter rates indirectly by running the task scheduler with a virtual
@@ -83,6 +86,7 @@ public class RatesITest extends MetricsITest {
 
         metricsService = new MetricsServiceImpl();
         metricsService.setTaskScheduler(taskScheduler);
+        metricsService.setDataAccess(new DataAccessImpl(session));
 
         String keyspace = "hawkulartest";
         System.setProperty("keyspace", keyspace);
